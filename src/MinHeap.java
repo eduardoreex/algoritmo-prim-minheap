@@ -41,4 +41,43 @@ public class MinHeap {
     public int getTamanho() {
         return tamanho;
     }
+    private void heapifyMin(int i) {
+        int esq = filhoEsquerdo(i);
+        int dir = filhoDireito(i);
+        int menor = i;
+
+        if (esq < tamanho && heap[esq].chave < heap[menor].chave) {
+            menor = esq;
+        }
+
+        if (dir < tamanho && heap[dir].chave < heap[menor].chave) {
+            menor = dir;
+        }
+
+        if (menor != i) {
+            trocar(i, menor);
+            heapifyMin(menor);
+        }
+    }
+
+    public Vertice extractMin() {
+        if (tamanho == 0) {
+            return null;
+        }
+
+        if (tamanho == 1) {
+            tamanho--;
+            posicao[heap[0].id] = -1;
+            return heap[0];
+        }
+
+        Vertice min = heap[0];
+        heap[0] = heap[tamanho - 1];
+        posicao[heap[0].id] = 0;
+        tamanho--;
+        posicao[min.id] = -1;
+        heapifyMin(0);
+
+        return min;
+    }
 }
