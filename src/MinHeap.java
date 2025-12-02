@@ -80,4 +80,40 @@ public class MinHeap {
 
         return min;
     }
+    public void insert(Vertice v) {
+        if (tamanho == capacidade) {
+            return;
+        }
+
+        tamanho++;
+        int i = tamanho - 1;
+        heap[i] = v;
+        posicao[v.id] = i;
+
+        while (i != 0 && heap[pai(i)].chave > heap[i].chave) {
+            trocar(i, pai(i));
+            i = pai(i);
+        }
+    }
+
+    public void decreaseKey(int verticeId, int novaChave) {
+        int i = posicao[verticeId];
+        if (i == -1) {
+            return;
+        }
+
+        heap[i].chave = novaChave;
+
+        while (i != 0 && heap[pai(i)].chave > heap[i].chave) {
+            trocar(i, pai(i));
+            i = pai(i);
+        }
+    }
+
+    public Vertice getMin() {
+        if (tamanho == 0) {
+            return null;
+        }
+        return heap[0];
+    }
 }
